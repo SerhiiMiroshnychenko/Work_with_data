@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 
@@ -9,20 +10,23 @@ with open(filename) as f:
     # ^ Викликаємо лише один раз, щоб отримати перший рядок файлу, що містить файлові заголовки
 
     # Отримати високі температури з цього файлу
-    highs = []
+    dates, highs = [], []
     for row in reader:  # Об'єкт reader продовжує роботу там, де зупинився останній раз
         # Позаяк ми вже зчитали назви стовпців, то починаємо роботу з їх вмістом
+        current_date = datetime.strptime(row[2], '%Y-%m-%d')  # Конвертуємо дані з індексом [2] в datetime об'єкти
         high = int(row[5])  # Витягаємо данні з індексом [5] -> TMAX == максимальна температура
-        highs.append(high)  # Формуємо список з цих даних
+        dates.append(current_date)  # Формуємо список з дат
+        highs.append(high)  # Формуємо список з температур
 
 # Створити графік високих температур
 plt.style.use('seaborn-v0_8')  # Обираємо стиль
 fig, ax = plt.subplots()  # Створюємо діаграми
-ax.plot(highs, c='red')  # Передаємо список highs, робимо його крапки червоними
+ax.plot(dates, highs, c='red')  # Передаємо список highs, робимо його крапки червоними
 
 # Відформатувати графік
 plt.title('Максимальні добові температури, липень 2018', fontsize=24)  # Задаємо назву
 plt.xlabel('', fontsize=16)  # Ось Х
+fig.autofmt_xdate()  # Зображає позначки дат діагонально, щоб вони не перетиналися
 plt.ylabel('Температура(F)', fontsize=16)  # Ось У
 plt.tick_params(axis='both', which='major', labelsize=16)  # Підписи на розмітці
 
