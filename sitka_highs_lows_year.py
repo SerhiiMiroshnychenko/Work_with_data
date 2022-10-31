@@ -23,8 +23,10 @@ with open(filename) as f:
 # Створити графік високих та низьких температур
 plt.style.use('seaborn-v0_8')  # Обираємо стиль
 fig, ax = plt.subplots()  # Створюємо діаграми
-ax.plot(dates, highs, c='orange')  # Передаємо список highs, робимо його крапки помаранчевими
-ax.plot(dates, lows, c='blue')  # Передаємо список highs, робимо його крапки червоними
+ax.plot(dates, highs, c='orange', alpha=0.5)  # Передаємо список highs, робимо його крапки помаранчевими
+# Де alpha=0.5 --> прозорість кольору
+ax.plot(dates, lows, c='blue', alpha=0.5)  # Передаємо список highs, робимо його крапки червоними
+plt.fill_between(dates, highs, lows, facecolor='yellow', alpha=0.1)
 
 # Відформатувати графік
 plt.title('Максимальні та мінімальні добові температури, 2018 рік', fontsize=24)  # Задаємо назву
