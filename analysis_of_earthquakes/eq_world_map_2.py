@@ -20,7 +20,13 @@ for eq_dict in all_eq_dicts:
     lats.append(lat)
 
 # Нанести землетруси на мапу
-data = [Scattergeo(lon=lons, lat=lats)]  # data --> список візуалізацій; Scattergeo --> об'єкт-діаграма мапи світу;
+# Формат для індивідуальних налаштувань
+data = [{
+    'type': 'scattergeo',
+    'lon': lons,
+    'lat': lats,
+}]
+# data --> список візуалізацій; scattergeo --> об'єкт-діаграма мапи світу;
 # lon=lons --> довготи; lat=lats --> широти.
 my_layout = Layout(title='ГЛОБАЛЬНІ ЗЕМЛЕТРУСИ')  # Даємо діаграмі ім'я
 
