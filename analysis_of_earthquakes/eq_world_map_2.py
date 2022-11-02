@@ -25,6 +25,9 @@ data = [{
     'type': 'scattergeo',
     'lon': lons,
     'lat': lats,
+    'marker': {
+        'size': [5*mag for mag in mags],  # Задаємо розмір маркера на мапі
+    },
 }]
 # data --> список візуалізацій; scattergeo --> об'єкт-діаграма мапи світу;
 # lon=lons --> довготи; lat=lats --> широти.
