@@ -10,14 +10,16 @@ with open(filename) as f:
 
 all_eq_dicts = all_eq_data['features']  # Створюємо список, що містить всі землетруси у вигляді словників
 
-mags, lons, lats = [], [], []  # Порожній словник для магнітуд, довгот та широт
+mags, lons, lats, hover_texts = [], [], [], []  # Порожній словник для магнітуд, довгот, широт та тексту
 for eq_dict in all_eq_dicts:
     mag = eq_dict['properties']['mag']  # Видобуваємо послідовно кожну магнітуду
     lon = eq_dict['geometry']['coordinates'][0]  # Видобуваємо послідовно кожну довготу
     lat = eq_dict['geometry']['coordinates'][1]  # Видобуваємо послідовно кожну широту
+    title = eq_dict['properties']['title']  # Секція 'title' в файлі містить опис магнітуди та локації
     mags.append(mag)  # Додаємо значення у словник mags
     lons.append(lon)
     lats.append(lat)
+    hover_texts.append(title)
 
 # Нанести землетруси на мапу
 # Формат для індивідуальних налаштувань
@@ -25,11 +27,12 @@ data = [{
     'type': 'scattergeo',
     'lon': lons,
     'lat': lats,
+    'text': hover_texts,  # Додаємо опис до кожного маркера
     'marker': {
         'size': [5*mag for mag in mags],  # Задаємо розмір маркера на мапі
         'color': mags,  # Формуємо градуювання забарвлення по списку mags
-        'colorscale': 'Portland',  # Задаємо кольорову схему
-        'reversescale': False,  # Реверсуємо кольорову шкалу
+        'colorscale': 'Hot',  # Задаємо кольорову схему
+        'reversescale': True,  # Реверсуємо кольорову шкалу
         'colorbar': {'title': 'Magnitude'},  # Зображення кольорової шкали збоку мапи + задаємо її назву
     },
 }]
